@@ -16,39 +16,43 @@ Automação do desafio RPA Challenge com múltiplas opções de execução: Sele
 
 ## Instalação
 
-> **Nota:** Este projeto utiliza o [Poetry](https://python-poetry.org/) para gerenciar dependências e ambientes virtuais. Se você nunca usou o Poetry, siga as instruções abaixo para instalar e utilizar.
+Você pode instalar as dependências do projeto de duas formas:
 
-### Instalando o Poetry
+### 1. Usando requirements.txt (pip)
 
-1. **Via comando oficial (recomendado):**
-   ```sh
-   curl -sSL https://install.python-poetry.org | python3 -
-   ```
-   Ou, no Windows (PowerShell):
-   ```powershell
-   (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
-   ```
-   Após instalar, feche e reabra o terminal, e verifique:
-   ```sh
-   poetry --version
-   ```
+O método mais simples e universal é via pip:
 
-2. **Clone o repositório:**
-   ```sh
-   git clone https://github.com/seu-usuario/rpachallenger.git
-   cd rpachallenger
-   ```
+```sh
+pip install -r requirements.txt
+```
 
-3. **Instale as dependências:**
-   ```sh
-   poetry install
-   ```
-   > O Poetry instalará todas as dependências, incluindo `selenium`, `playwright`, `openpyxl`, `pandas` e outras.
+### 2. Usando Poetry (opcional)
 
-4. **(Opcional) Instale os browsers do Playwright:**
-   ```sh
-   poetry run playwright install
-   ```
+Se você já utiliza o [Poetry](https://python-poetry.org/), pode instalar as dependências com:
+
+```sh
+poetry install
+```
+
+> Se não conhece o Poetry, utilize o método com pip acima. Caso queira saber mais ou instalar o Poetry, acesse: https://python-poetry.org/docs/#installation
+
+### (Opcional) Instale os browsers do Playwright
+Se for rodar no modo Playwright, execute:
+```sh
+poetry run playwright install
+# ou, se estiver usando pip:
+python -m playwright install
+```
+
+## Alternativa: Instalação com requirements.txt
+
+Se preferir não usar o Poetry, você pode instalar as dependências diretamente com pip usando o arquivo `requirements.txt`:
+
+```sh
+pip install -r requirements.txt
+```
+
+> Atenção: O uso do Poetry é recomendado para garantir o ambiente reprodutível, mas o `requirements.txt` está disponível para facilitar testes rápidos ou integração com outros sistemas.
 
 ## Como Usar
 
