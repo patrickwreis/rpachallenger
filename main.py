@@ -66,7 +66,7 @@ class RpaInputChallenger:
         logging.error('Download did not complete within the specified timeout.')
         return False
 
-    def setup_webdriver(self):
+    def setup_webdriver(self, headless=False):
         logging.info('Setting up the WebDriver...')
         try:
             prefs = {
@@ -77,6 +77,10 @@ class RpaInputChallenger:
             }
             options = ChromeOptions()
             options.add_experimental_option('prefs', prefs)
+            if headless:
+                options.add_argument('--headless=new')
+                options.add_argument('--disable-gpu')
+                options.add_argument('--window-size=1920,1080')
             self.driver = webdriver.Chrome(service=ChromeService(), options=options)
             logging.info('WebDriver initialized.')
         except Exception as e:
@@ -126,11 +130,11 @@ class RpaInputChallenger:
             logging.error(f'Failed to complete challenge: {e}')
             sys.exit(1)
 
-    def input_challenge_playwright(self):
+    def input_challenge_playwright(self, headless=False):
         logging.info(f'Navigating to {self.url_input_challenge}...')
         try:
             with sync_playwright() as p:
-                browser = p.chromium.launch(headless=False)
+                browser = p.chromium.launch(headless=headless)
                 page = browser.new_page()
 
                 page.goto('https://rpachallenge.com')
@@ -175,7 +179,7 @@ class RpaInputChallenger:
             logging.error(f'Failed to complete challenge: {e}')
             sys.exit(1)
 
-    def run(self, mode='selenium'):
+    def run(self, mode='selenium', headless=False):
         logging.info('Running RPA Challenger...')
         if mode not in {'selenium', 'playwright'}:
             logging.error('Unsupported mode. Please use "selenium" or "playwright".')
@@ -184,10 +188,10 @@ class RpaInputChallenger:
         ini_time = time()
         if mode == 'selenium':
             logging.info('Using Selenium mode.')
-            self.setup_webdriver()
+            self.setup_webdriver(headless=headless)
             self.input_challenge_selenium()
         elif mode == 'playwright':
-            self.input_challenge_playwright()
+            self.input_challenge_playwright(headless=headless)
 
         elapsed_time = time() - ini_time
         logging.info(f'RPA Challenger completed in {elapsed_time:.2f} seconds.')
@@ -201,10 +205,15 @@ def main():
         default='selenium',
         help='Escolha o modo de execução: selenium (padrão) ou playwright',
     )
+    parser.add_argument(
+        '--headless',
+        action='store_true',
+        help='Executa o navegador em modo headless (sem interface gráfica) em Selenium ou Playwright.'
+    )
     args = parser.parse_args()
 
     rpa_challenger = RpaInputChallenger()
-    rpa_challenger.run(mode=args.mode)
+    rpa_challenger.run(mode=args.mode, headless=args.headless)
 
 
 if __name__ == '__main__':

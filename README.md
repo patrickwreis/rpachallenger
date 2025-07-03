@@ -39,9 +39,9 @@ poetry install
 ### (Opcional) Instale os browsers do Playwright
 Se for rodar no modo Playwright, execute:
 ```sh
-poetry run playwright install
-# ou, se estiver usando pip:
 python -m playwright install
+# ou, se estiver usando Poetry:
+poetry run playwright install
 ```
 
 ## Alternativa: Instalação com requirements.txt
@@ -57,11 +57,18 @@ pip install -r requirements.txt
 ## Como Usar
 
 ### Via Terminal (CLI)
-Execute o script principal escolhendo o modo de execução:
+Execute o script principal escolhendo o modo de execução e, se desejar, o modo headless:
 
 ```sh
-poetry run python main.py --mode selenium    # Executa usando Selenium (padrão)
-poetry run python main.py --mode playwright  # Executa usando Playwright
+python main.py --mode selenium              # Executa usando Selenium (padrão)
+python main.py --mode playwright            # Executa usando Playwright
+python main.py --mode selenium --headless   # Selenium em modo headless
+python main.py --mode playwright --headless # Playwright em modo headless
+```
+
+Se estiver usando Poetry:
+```sh
+poetry run python main.py --mode selenium --headless
 ```
 
 ### Via VS Code
@@ -96,6 +103,7 @@ poetry run task run-playwright
 - O modo Selenium requer o ChromeDriver compatível com sua versão do Chrome (gerenciado automaticamente pelo Selenium 4+).
 - O modo Playwright requer instalação dos browsers Playwright (`poetry run playwright install`).
 - O log de execução é exibido no console.
+- O parâmetro `--headless` pode ser usado tanto com Selenium quanto com Playwright para rodar o navegador sem interface gráfica.
 
 ## Autor
 - Patrick Reis (<patrickwreis@gmail.com>)
