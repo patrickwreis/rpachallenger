@@ -30,14 +30,6 @@ poetry install
 python -m playwright install  # ou: poetry run playwright install
 ```
 
-## Alternativa: Instalação com requirements.txt
-
-Se preferir não usar o Poetry, você pode instalar as dependências diretamente com pip usando o arquivo `requirements.txt`:
-
-```sh
-pip install -r requirements.txt
-```
-
 ## Como Usar
 
 ### CLI (Terminal)
